@@ -6,7 +6,7 @@
 
   After downloading, install Docker and open Docker Desktop. Wait until Docker is fully running.
 
-- install using the shell
+- Install using the shell
 
   - Window
 
