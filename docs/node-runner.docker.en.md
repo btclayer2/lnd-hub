@@ -1,4 +1,4 @@
-## 安装[Docker](https://www.docker.com/)
+## Install[Docker](https://www.docker.com/)
 
 - Open the [Docker website](https://www.docker.com/), download the version suitable for your operating system.
 
