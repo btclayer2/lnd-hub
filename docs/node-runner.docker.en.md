@@ -42,7 +42,7 @@
 1.  Choose or create a folder for storing lnd node data
 
     ```shell
-    mkdir ./lnd && cd lnd
+    mkdir ./lnd 
     ```
 
    
@@ -50,9 +50,9 @@
 2. Create the configuration file `lnd.conf`. You can use the provided `lnd.conf.example` as a template.
 
     ```shell
-    cp lnd.conf.example lnd.conf
-    
-    vim lnd.conf
+    cp ./lnd.conf.example ./lnd/lnd.conf
+    # Or
+    vim ./lnd/lnd.conf
     ```
 
     If you have your own BTC full node, you can set `bitcoin.node` to `btcd` or `bitcoind` and adjust the `[neutrino]` section accordingly.
@@ -120,7 +120,7 @@
 docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
 ```
 
-At this point, the wallet is not yet created. If you use `bitcoin.node=neutrino`, the lnd node will start running a lightweight neutrino node and begin syncing data. This synchronization may take some time, and wallet functionality will be unavailable during this period.
+Currently, the wallet is not yet created. If you use `bitcoin.node=neutrino`, the lnd node will start running a lightweight neutrino node and begin syncing data. This synchronization may take some time, and wallet functionality will be unavailable during this period.
 
 ## Create a Wallet
 
@@ -176,7 +176,7 @@ lnd successfully initialized!
 
 ## Completion
 
-At this point, the lnd node setup and initialization are complete. The authentication file admin.macaroon can be found in the directory: `./lnd/data/chain/bitcoin/{network}/admin.macaroon`.
-
+The lnd node setup and initialization are complete. The authentication file admin.macaroon can be found in the directory: `./lnd/data/chain/bitcoin/{network}/admin.macaroon`.
+The node RPC address is the `restlisten` address in the `lnd.conf`.
 
 

@@ -42,7 +42,7 @@
 1. 选择或者创建为lnd节点存储数据的文件夹
 
    ```shell
-   mkdir ./lnd && cd lnd
+   mkdir ./lnd 
    ```
 
    
@@ -50,9 +50,9 @@
 2. 创建配置文件`lnd.conf`，可以建议使用当前的 `lnd.conf.example`
 
     ```shell
-    cp lnd.conf.example lnd.conf
-    
-    vim lnd.conf
+    cp ./lnd.conf.example ./lnd/lnd.conf
+    # Or
+    vim ./lnd/lnd.conf
     ```
 
     如果你有自己的BTC全节点的话，可以替换`bitcoin.node`设置为 `btcd` 或者 `bitcoind`
@@ -179,3 +179,4 @@ lnd successfully initialized!
 ## 完成
 
 到此节点创建和运行已经完成，认证使用的admin.macaroon在当前文件夹的`./lnd/data/chain/bitcoin/{network}/admin.macaroon`
+节点rpc地址为`lnd.conf`中的`restlisten`地址
