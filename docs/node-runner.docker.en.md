@@ -41,78 +41,78 @@
 
 1.  Choose or create a folder for storing lnd node data
 
-   ```shell
-   mkdir ./lnd && cd lnd
-   ```
+    ```shell
+    mkdir ./lnd && cd lnd
+    ```
 
    
 
-   3. Create the configuration file `lnd.conf`. You can use the provided `lnd.conf.example` as a template.
+2. Create the configuration file `lnd.conf`. You can use the provided `lnd.conf.example` as a template.
 
-      ```shell
-      cp lnd.conf.example lnd.conf
-      
-      vim lnd.conf
-      ```
+    ```shell
+    cp lnd.conf.example lnd.conf
+    
+    vim lnd.conf
+    ```
 
-      If you have your own BTC full node, you can set `bitcoin.node` to `btcd` or `bitcoind` and adjust the `[neutrino]` section accordingly.
+    If you have your own BTC full node, you can set `bitcoin.node` to `btcd` or `bitcoind` and adjust the `[neutrino]` section accordingly.
 
-      - btcd
-
-        ```toml
-        [btcd]
-        btcd.rpchost=
-        btcd.rpcuser=
-        btcd.rpcpass=
-        btcd.rawrpccert=
-        btcd.rpccert=
-        ```
-      
-        
-
-      - bitcoind
-
-        ``` toml
-        [Bitcoind]
-        bitcoind.rpchost=
-        bitcoind.rpcuser=
-        bitcoind.rpcpass=
-        bitcoind.rpcpolling=true
-        ```
-      
-      **Note**: If you set `bitcoin.node` to a full node (`btcd` or `bitcoind`) without specifying remote node information, lnd will internally start a full node synchronization. This process will consume significant time and storage space.
-
-      
-
-      If you don’t have a full node, you can use the lightweight neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes).
+    - btcd
 
       ```toml
-      [Application Options]
-      debuglevel=trace
-      maxpendingchannels=10
-      alias=Bevm_client_test
-      no-macaroons=false
-      coin-selection-strategy=largest
-      rpclisten=localhost:10009
-      restlisten=localhost:8080
-      no-rest-tls=true
-      
-      [prometheus]
-      prometheus.listen=[::]:8989
-      
-      [Bitcoin]
-      bitcoin.mainnet=false
-      bitcoin.testnet=false
-      bitcoin.simnet=false
-      bitcoin.regtest=false
-      bitcoin.signet=true
-      bitcoin.node=neutrino
-      
-      [neutrino]
-      
-      [protocol]
-      protocol.simple-taproot-chans=true
+      [btcd]
+      btcd.rpchost=
+      btcd.rpcuser=
+      btcd.rpcpass=
+      btcd.rawrpccert=
+      btcd.rpccert=
       ```
+    
+      
+
+    - bitcoind
+
+      ``` toml
+      [Bitcoind]
+      bitcoind.rpchost=
+      bitcoind.rpcuser=
+      bitcoind.rpcpass=
+      bitcoind.rpcpolling=true
+      ```
+    
+    **Note**: If you set `bitcoin.node` to a full node (`btcd` or `bitcoind`) without specifying remote node information, lnd will internally start a full node synchronization. This process will consume significant time and storage space.
+
+    
+
+    If you don’t have a full node, you can use the lightweight neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes).
+
+    ```toml
+    [Application Options]
+    debuglevel=trace
+    maxpendingchannels=10
+    alias=Bevm_client_test
+    no-macaroons=false
+    coin-selection-strategy=largest
+    rpclisten=localhost:10009
+    restlisten=localhost:8080
+    no-rest-tls=true
+    
+    [prometheus]
+    prometheus.listen=[::]:8989
+    
+    [Bitcoin]
+    bitcoin.mainnet=false
+    bitcoin.testnet=false
+    bitcoin.simnet=false
+    bitcoin.regtest=false
+    bitcoin.signet=true
+    bitcoin.node=neutrino
+    
+    [neutrino]
+    
+    [protocol]
+    protocol.simple-taproot-chans=true
+    ```
 
 ## Run lnd
 

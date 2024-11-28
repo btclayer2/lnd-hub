@@ -47,74 +47,74 @@
 
    
 
-   3. 创建配置文件`lnd.conf`，可以建议使用当前的 `lnd.conf.example`
+2. 创建配置文件`lnd.conf`，可以建议使用当前的 `lnd.conf.example`
 
-      ```shell
-      cp lnd.conf.example lnd.conf
-      
-      vim lnd.conf
-      ```
+    ```shell
+    cp lnd.conf.example lnd.conf
+    
+    vim lnd.conf
+    ```
 
-      如果你有自己的BTC全节点的话，可以替换`bitcoin.node`设置为 `btcd` 或者 `bitcoind`
+    如果你有自己的BTC全节点的话，可以替换`bitcoin.node`设置为 `btcd` 或者 `bitcoind`
 
-      需要对应的修改`[neutrino]` 
+    需要对应的修改`[neutrino]` 
 
-      - btcd
-
-        ```toml
-        [btcd]
-        btcd.rpchost=
-        btcd.rpcuser=
-        btcd.rpcpass=
-        btcd.rawrpccert=
-        btcd.rpccert=
-        ```
-
-        
-
-      - bitcoind
-
-        ``` toml
-        [Bitcoind]
-        bitcoind.rpchost=
-        bitcoind.rpcuser=
-        bitcoind.rpcpass=
-        bitcoind.rpcpolling=true
-        ```
-
-      **注意**：如果替换`bitcoin.node` 为全节点 `btcd` 或者 `bitcoind` 且未设置远程节点信息，lnd将在内部启动一个全节点同步，这将会花费很长的时间和占用较大的存储盘资源
-
-      
-
-      如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）
+    - btcd
 
       ```toml
-      [Application Options]
-      debuglevel=trace
-      maxpendingchannels=10
-      alias=Bevm_client_test
-      no-macaroons=false
-      coin-selection-strategy=largest
-      rpclisten=localhost:10009
-      restlisten=localhost:8080
-      no-rest-tls=true
-      
-      [prometheus]
-      prometheus.listen=[::]:8989
-      
-      [Bitcoin]
-      bitcoin.mainnet=false
-      bitcoin.testnet=false
-      bitcoin.simnet=false
-      bitcoin.regtest=false
-      bitcoin.signet=true
-      bitcoin.node=neutrino
-      
-      [neutrino]
-      
-      [protocol]
-      protocol.simple-taproot-chans=true
+      [btcd]
+      btcd.rpchost=
+      btcd.rpcuser=
+      btcd.rpcpass=
+      btcd.rawrpccert=
+      btcd.rpccert=
       ```
+
+      
+
+    - bitcoind
+
+      ``` toml
+      [Bitcoind]
+      bitcoind.rpchost=
+      bitcoind.rpcuser=
+      bitcoind.rpcpass=
+      bitcoind.rpcpolling=true
+      ```
+
+    **注意**：如果替换`bitcoin.node` 为全节点 `btcd` 或者 `bitcoind` 且未设置远程节点信息，lnd将在内部启动一个全节点同步，这将会花费很长的时间和占用较大的存储盘资源
+
+    
+
+    如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）
+
+    ```toml
+    [Application Options]
+    debuglevel=trace
+    maxpendingchannels=10
+    alias=Bevm_client_test
+    no-macaroons=false
+    coin-selection-strategy=largest
+    rpclisten=localhost:10009
+    restlisten=localhost:8080
+    no-rest-tls=true
+    
+    [prometheus]
+    prometheus.listen=[::]:8989
+    
+    [Bitcoin]
+    bitcoin.mainnet=false
+    bitcoin.testnet=false
+    bitcoin.simnet=false
+    bitcoin.regtest=false
+    bitcoin.signet=true
+    bitcoin.node=neutrino
+    
+    [neutrino]
+    
+    [protocol]
+    protocol.simple-taproot-chans=true
+    ```
 
 ## 运行LND
 
