@@ -82,11 +82,11 @@
       bitcoind.rpcpolling=true
       ```
 
-    **注意**：如果替换`bitcoin.node` 为全节点 `btcd` 或者 `bitcoind` 且未设置远程节点信息，lnd将在内部启动一个全节点同步，这将会花费很长的时间和占用较大的存储盘资源
+    > **注意**：如果替换`bitcoin.node` 为全节点 `btcd` 或者 `bitcoind` 且未设置远程节点信息，lnd将在内部启动一个全节点同步，这将会花费很长的时间和占用较大的存储盘资源
 
     
 
-    如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）
+    如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）, 使用`neutrino`之类轻节点时，建议适量增加addpeer对等节点，加快同步速度，目前`lnd.conf.example`中已有推荐
 
     ```toml
     [Application Options]
@@ -112,6 +112,8 @@
     bitcoin.node=neutrino
     
     [neutrino]
+    neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
+    neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
     
     [protocol]
     protocol.simple-taproot-chans=true
@@ -119,11 +121,21 @@
 
 ## 运行LND
 
+> **注意**: 以下docker 命令执行都需要在lnd文件夹上层目录执行，或者自行修改docker run命令中的路径`./lnd`到对应绝对路径
+
 ```shell
 docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
 ```
 
 此时未创建钱包，如果使用了`bitcoin.node=neutrino` 配置，lnd节点会开始运行`neutrino` 轻节点，并开始同步数据，同步数据需要一点时间，同步期间无法使用钱包功能
+可以通过一下命令查看当前同步情况和同步块高详情
+
+```shell
+# 同步详情
+docker exec -it lnd lncli --network signet getinfo
+# 同步块高数
+docker exec -it lnd lncli --network signet getinfo | grep block_height
+```
 
 ## 创建钱包
 
@@ -181,3 +193,26 @@ lnd successfully initialized!
 
 到此节点创建和运行已经完成，认证使用的admin.macaroon在当前文件夹的`./lnd/data/chain/bitcoin/{network}/admin.macaroon`
 节点rpc地址为`lnd.conf`中的`restlisten`地址
+
+## 常见问题
+
+### 如何停止`LND`节点，如何重启节点
+
+```shell
+# 停止节点
+docker stop lnd
+
+# 重启节点
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+```
+
+### 重启节点或者第一次运行连接钱包时遇到`wallet locked, unlock it to enable full RPC access`错误
+每次重新运行`LND`节点需要重新`unlock`钱包，需要运行以下命令
+
+```shell
+docker exec -it lnd lncli unlock
+```
+
+### `LND`节点的数据和通道数据都在哪里，是否会因为节点暂停而自动清除
+节点数据和通道数据都在`./lnd`文件夹下，包含`admin.macarron`文件等，该文件不会随着Docker中`LND`节点的暂停而清除，当然请妥善保管改文件夹，如果不小心删除，将导致资产损失
+

@@ -80,11 +80,11 @@
       bitcoind.rpcpolling=true
       ```
     
-    **Note**: If you set `bitcoin.node` to a full node (`btcd` or `bitcoind`) without specifying remote node information, lnd will internally start a full node synchronization. This process will consume significant time and storage space.
+    > **Note**: If you set `bitcoin.node` to a full node (`btcd` or `bitcoind`) without specifying remote node information, lnd will internally start a full node synchronization. This process will consume significant time and storage space.
 
     
 
-    If you don’t have a full node, you can use the lightweight neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes).
+    If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.example` already has recommended settings.
 
     ```toml
     [Application Options]
@@ -110,6 +110,8 @@
     bitcoin.node=neutrino
     
     [neutrino]
+    neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
+    neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
     
     [protocol]
     protocol.simple-taproot-chans=true
@@ -117,11 +119,22 @@
 
 ## Run lnd
 
+> **Note**: The following Docker commands must be executed in the upper directory of the lnd folder, or you can modify the path `./lnd` in the `docker run` command to the corresponding absolute path.
+
 ```shell
 docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
 ```
 
 Currently, the wallet is not yet created. If you use `bitcoin.node=neutrino`, the lnd node will start running a lightweight neutrino node and begin syncing data. This synchronization may take some time, and wallet functionality will be unavailable during this period.
+
+You can view the current synchronization status and synchronization block height details through the following command.
+
+```shell
+# Synchronization Details
+docker exec -it lnd lncli --network signet getinfo
+# Synchronized block height
+docker exec -it lnd lncli --network signet getinfo | grep block_height
+```
 
 ## Create a Wallet
 
@@ -181,3 +194,26 @@ The lnd node setup and initialization are complete. The authentication file admi
 The node RPC address is the `restlisten` address in the `lnd.conf`.
 
 
+## FAQ
+
+### How to stop the `LND` node, how to restart the node
+
+```shell
+# Stop Node
+docker stop lnd
+
+# Start node
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+```
+
+### Rebooting the node or encountering the error `wallet locked, unlock it to enable full RPC access` when connecting the wallet for the first time.
+
+Each time the `LND` node is restarted, the wallet needs to be `unlocked` again, and the following command needs to be run.
+
+```shell
+docker exec -it lnd lncli unlock
+```
+
+### Where are the data of the `LND` node and channel, and will they be automatically cleared due to the node being paused?
+
+Node data and channel data are both in the `./lnd` folder, including the `admin.macarron` file, etc. This file will not be cleared when the `LND` node in Docker is paused. Of course, please take good care of this folder, as accidental deletion will result in asset loss.
