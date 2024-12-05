@@ -61,7 +61,7 @@
 
     - btcd
 
-      ```toml
+      ``` ini
       [btcd]
       btcd.rpchost=
       btcd.rpcuser=
@@ -74,7 +74,7 @@
 
     - bitcoind
 
-      ``` toml
+      ``` ini
       [Bitcoind]
       bitcoind.rpchost=
       bitcoind.rpcuser=
@@ -88,7 +88,7 @@
 
     如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）, 使用`neutrino`之类轻节点时，建议适量增加addpeer对等节点，加快同步速度，目前`lnd.conf.example`中已有推荐
 
-    ```toml
+    ``` ini
     [Application Options]
     debuglevel=trace
     maxpendingchannels=10

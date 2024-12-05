@@ -59,7 +59,7 @@
 
     - btcd
 
-      ```toml
+      ``` ini
       [btcd]
       btcd.rpchost=
       btcd.rpcuser=
@@ -72,7 +72,7 @@
 
     - bitcoind
 
-      ``` toml
+      ``` ini
       [Bitcoind]
       bitcoind.rpchost=
       bitcoind.rpcuser=
@@ -86,7 +86,7 @@
 
     If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.example` already has recommended settings.
 
-    ```toml
+    ``` ini
     [Application Options]
     debuglevel=trace
     maxpendingchannels=10
