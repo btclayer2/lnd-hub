@@ -96,7 +96,7 @@
     rpclisten=localhost:10009
     restlisten=localhost:8080
     no-rest-tls=true
-    restcors=https://bevm-hub.vercel.app
+    restcors=https://bevmhub.bevm.io
     
     [prometheus]
     prometheus.listen=[::]:8989
