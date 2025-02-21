@@ -87,42 +87,42 @@
     If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.example` already has recommended settings.
 
     ``` ini
-        [Application Options]
-        debuglevel=trace
-        maxpendingchannels=10
-        alias=Bevm_client_test
-        no-macaroons=false
-        coin-selection-strategy=largest
-        rpclisten=localhost:10009
-        restlisten=localhost:8080
-        no-rest-tls=true
-        restcors=https://bevmhub.bevm.io
-        
-        [prometheus]
-        prometheus.listen=[::]:8989
-        
-        [Bitcoin]
-        bitcoin.mainnet=true
-        bitcoin.node=neutrino
-        
-        [neutrino]
-        neutrino.addpeer=btcd-mainnet.lightning.computer
-        neutrino.addpeer=neutrino.noderunner.wtf
-        neutrino.addpeer=node.eldamar.icu
-        neutrino.addpeer=btcd.lnolymp.us
-        neutrino.addpeer=btcd0.lightning.engineering
-        neutrino.addpeer=bb1.breez.technology:8333
-        neutrino.addpeer=node.blixtwallet.com:8333
-        neutrino.addpeer=mainnet1-btcd.zaphq.io
-        neutrino.addpeer=mainnet2-btcd.zaphq.io
-        neutrino.addpeer=mainnet3-btcd.zaphq.io
-        neutrino.addpeer=mainnet4-btcd.zaphq.io
-        
-        [protocol]
-        protocol.simple-taproot-chans=true
-        
-        [fee]
-        fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
+    [Application Options]
+    debuglevel=trace
+    maxpendingchannels=10
+    alias=Bevm_client_test
+    no-macaroons=false
+    coin-selection-strategy=largest
+    rpclisten=localhost:10009
+    restlisten=localhost:8080
+    no-rest-tls=true
+    restcors=https://bevmhub.bevm.io
+    
+    [prometheus]
+    prometheus.listen=[::]:8989
+    
+    [Bitcoin]
+    bitcoin.mainnet=true
+    bitcoin.node=neutrino
+    
+    [neutrino]
+    neutrino.addpeer=btcd-mainnet.lightning.computer
+    neutrino.addpeer=neutrino.noderunner.wtf
+    neutrino.addpeer=node.eldamar.icu
+    neutrino.addpeer=btcd.lnolymp.us
+    neutrino.addpeer=btcd0.lightning.engineering
+    neutrino.addpeer=bb1.breez.technology:8333
+    neutrino.addpeer=node.blixtwallet.com:8333
+    neutrino.addpeer=mainnet1-btcd.zaphq.io
+    neutrino.addpeer=mainnet2-btcd.zaphq.io
+    neutrino.addpeer=mainnet3-btcd.zaphq.io
+    neutrino.addpeer=mainnet4-btcd.zaphq.io
+    
+    [protocol]
+    protocol.simple-taproot-chans=true
+    
+    [fee]
+    fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
     ```
 
 ## Run lnd
