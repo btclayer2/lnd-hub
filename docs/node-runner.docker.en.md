@@ -87,34 +87,42 @@
     If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.example` already has recommended settings.
 
     ``` ini
-    [Application Options]
-    debuglevel=trace
-    maxpendingchannels=10
-    alias=Bevm_client_test
-    no-macaroons=false
-    coin-selection-strategy=largest
-    rpclisten=localhost:10009
-    restlisten=localhost:8080
-    no-rest-tls=true
-    restcors=https://bevmhub.bevm.io
-    
-    [prometheus]
-    prometheus.listen=[::]:8989
-    
-    [Bitcoin]
-    bitcoin.mainnet=false
-    bitcoin.testnet=false
-    bitcoin.simnet=false
-    bitcoin.regtest=false
-    bitcoin.signet=true
-    bitcoin.node=neutrino
-    
-    [neutrino]
-    neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
-    neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
-    
-    [protocol]
-    protocol.simple-taproot-chans=true
+        [Application Options]
+        debuglevel=trace
+        maxpendingchannels=10
+        alias=Bevm_client_test
+        no-macaroons=false
+        coin-selection-strategy=largest
+        rpclisten=localhost:10009
+        restlisten=localhost:8080
+        no-rest-tls=true
+        restcors=https://bevmhub.bevm.io
+        
+        [prometheus]
+        prometheus.listen=[::]:8989
+        
+        [Bitcoin]
+        bitcoin.mainnet=true
+        bitcoin.node=neutrino
+        
+        [neutrino]
+        neutrino.addpeer=btcd-mainnet.lightning.computer
+        neutrino.addpeer=neutrino.noderunner.wtf
+        neutrino.addpeer=node.eldamar.icu
+        neutrino.addpeer=btcd.lnolymp.us
+        neutrino.addpeer=btcd0.lightning.engineering
+        neutrino.addpeer=bb1.breez.technology:8333
+        neutrino.addpeer=node.blixtwallet.com:8333
+        neutrino.addpeer=mainnet1-btcd.zaphq.io
+        neutrino.addpeer=mainnet2-btcd.zaphq.io
+        neutrino.addpeer=mainnet3-btcd.zaphq.io
+        neutrino.addpeer=mainnet4-btcd.zaphq.io
+        
+        [protocol]
+        protocol.simple-taproot-chans=true
+        
+        [fee]
+        fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
     ```
 
 ## Run lnd
@@ -122,7 +130,7 @@
 > **Note**: The following Docker commands must be executed in the upper directory of the lnd folder, or you can modify the path `./lnd` in the `docker run` command to the corresponding absolute path.
 
 ```shell
-docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.5-beta
 ```
 
 Currently, the wallet is not yet created. If you use `bitcoin.node=neutrino`, the lnd node will start running a lightweight neutrino node and begin syncing data. This synchronization may take some time, and wallet functionality will be unavailable during this period.
@@ -131,9 +139,9 @@ You can view the current synchronization status and synchronization block height
 
 ```shell
 # Synchronization Details
-docker exec -it lnd lncli --network signet getinfo
+docker exec -it lnd lncli --network mainnet getinfo
 # Synchronized block height
-docker exec -it lnd lncli --network signet getinfo | grep block_height
+docker exec -it lnd lncli --network mainnet getinfo | grep block_height
 ```
 
 ## Create a Wallet
@@ -203,7 +211,7 @@ The node RPC address is the `restlisten` address in the `lnd.conf`.
 docker stop lnd
 
 # Start node
-docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.5-beta
 ```
 
 ### Rebooting the node or encountering the error `wallet locked, unlock it to enable full RPC access` when connecting the wallet for the first time.

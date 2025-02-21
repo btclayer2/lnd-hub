@@ -86,37 +86,45 @@
 
     
 
-    如果没有全节点，可以使用`lnd.conf.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）, 使用`neutrino`之类轻节点时，建议适量增加addpeer对等节点，加快同步速度，目前`lnd.conf.example`中已有推荐
+    如果没有全节点，可以使用`lnd.conf.mainnet.example`中设置的`neutrino` 轻节点，lnd会自动同步数据（大概10分钟）, 使用`neutrino`之类轻节点时，建议适量增加addpeer对等节点，加快同步速度，目前`lnd.conf.mainnet.example`中已有推荐
 
     ``` ini
-    [Application Options]
-    debuglevel=trace
-    maxpendingchannels=10
-    alias=Bevm_client_test
-    no-macaroons=false
-    coin-selection-strategy=largest
-    rpclisten=localhost:10009
-    restlisten=localhost:8080
-    no-rest-tls=true
-    restcors=https://bevmhub.bevm.io  
-    
-    [prometheus]
-    prometheus.listen=[::]:8989
-    
-    [Bitcoin]
-    bitcoin.mainnet=false
-    bitcoin.testnet=false
-    bitcoin.simnet=false
-    bitcoin.regtest=false
-    bitcoin.signet=true
-    bitcoin.node=neutrino
-    
-    [neutrino]
-    neutrino.addpeer=x49.seed.signet.bitcoin.sprovoost.nl
-    neutrino.addpeer=v7ajjeirttkbnt32wpy3c6w3emwnfr3fkla7hpxcfokr3ysd3kqtzmqd.onion:38333
-    
-    [protocol]
-    protocol.simple-taproot-chans=true
+        [Application Options]
+        debuglevel=trace
+        maxpendingchannels=10
+        alias=Bevm_client_test
+        no-macaroons=false
+        coin-selection-strategy=largest
+        rpclisten=localhost:10009
+        restlisten=localhost:8080
+        no-rest-tls=true
+        restcors=https://bevmhub.bevm.io
+        
+        [prometheus]
+        prometheus.listen=[::]:8989
+        
+        [Bitcoin]
+        bitcoin.mainnet=true
+        bitcoin.node=neutrino
+        
+        [neutrino]
+        neutrino.addpeer=btcd-mainnet.lightning.computer
+        neutrino.addpeer=neutrino.noderunner.wtf
+        neutrino.addpeer=node.eldamar.icu
+        neutrino.addpeer=btcd.lnolymp.us
+        neutrino.addpeer=btcd0.lightning.engineering
+        neutrino.addpeer=bb1.breez.technology:8333
+        neutrino.addpeer=node.blixtwallet.com:8333
+        neutrino.addpeer=mainnet1-btcd.zaphq.io
+        neutrino.addpeer=mainnet2-btcd.zaphq.io
+        neutrino.addpeer=mainnet3-btcd.zaphq.io
+        neutrino.addpeer=mainnet4-btcd.zaphq.io
+        
+        [protocol]
+        protocol.simple-taproot-chans=true
+        
+        [fee]
+        fee.url=https://nodes.lightning.computer/fees/v1/btc-fee-estimates.json
     ```
 
 ## 运行LND
@@ -124,7 +132,7 @@
 > **注意**: 以下docker 命令执行都需要在lnd文件夹上层目录执行，或者自行修改docker run命令中的路径`./lnd`到对应绝对路径
 
 ```shell
-docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.5-beta
 ```
 
 此时未创建钱包，如果使用了`bitcoin.node=neutrino` 配置，lnd节点会开始运行`neutrino` 轻节点，并开始同步数据，同步数据需要一点时间，同步期间无法使用钱包功能
@@ -132,9 +140,9 @@ docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/l
 
 ```shell
 # 同步详情
-docker exec -it lnd lncli --network signet getinfo
+docker exec -it lnd lncli --network mainnet getinfo
 # 同步块高数
-docker exec -it lnd lncli --network signet getinfo | grep block_height
+docker exec -it lnd lncli --network mainnet getinfo | grep block_height
 ```
 
 ## 创建钱包
@@ -203,7 +211,7 @@ lnd successfully initialized!
 docker stop lnd
 
 # 重启节点
-docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.3-beta
+docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/lnd:v0.18.5-beta
 ```
 
 ### 重启节点或者第一次运行连接钱包时遇到`wallet locked, unlock it to enable full RPC access`错误
