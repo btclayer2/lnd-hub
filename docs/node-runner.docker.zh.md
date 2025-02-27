@@ -47,10 +47,10 @@
 
    
 
-2. 创建配置文件`lnd.conf`，可以建议使用当前的 `lnd.conf.example`
+2. 创建配置文件`lnd.conf`，可以建议使用当前的 `lnd.conf.mainnet.example`
 
     ```shell
-    cp ./lnd.conf.example ./lnd/lnd.conf
+    cp ./lnd.conf.mainnet.example ./lnd/lnd.conf
     # Or
     vim ./lnd/lnd.conf
     ```

@@ -47,10 +47,10 @@
 
    
 
-2. Create the configuration file `lnd.conf`. You can use the provided `lnd.conf.example` as a template.
+2. Create the configuration file `lnd.conf`. You can use the provided `lnd.conf.mainnet.example` as a template.
 
     ```shell
-    cp ./lnd.conf.example ./lnd/lnd.conf
+    cp ./lnd.conf.mainnet.example ./lnd/lnd.conf
     # Or
     vim ./lnd/lnd.conf
     ```
