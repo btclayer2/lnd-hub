@@ -135,7 +135,7 @@ docker run --name lnd --rm -d --network host -v ./lnd:/root/.lnd lightninglabs/l
 
 Currently, the wallet is not yet created. If you use `bitcoin.node=neutrino`, the lnd node will start running a lightweight neutrino node and begin syncing data. This synchronization may take some time, and wallet functionality will be unavailable during this period.
 
-You can view the current synchronization status and synchronization block height details through the following command.
+You can view the current synchronization status and synchronization block height details through the following command. (You need to create a wallet first)
 
 ```shell
 # Synchronization Details
