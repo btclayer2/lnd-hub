@@ -224,3 +224,11 @@ docker exec -it lnd lncli unlock
 ### `LND`节点的数据和通道数据都在哪里，是否会因为节点暂停而自动清除
 节点数据和通道数据都在`./lnd`文件夹下，包含`admin.macarron`文件等，该文件不会随着Docker中`LND`节点的暂停而清除，当然请妥善保管改文件夹，如果不小心删除，将导致资产损失
 
+### 查看同步信息报错
+```shell
+$ docker exec -it lnd lncli --network mainnet --lnddir /root/.lnd getinfo
+[lncli] could not load global options: unable to read macaroon path (check the network setting!): open /root/.lnd/data/chain/bitcoin/mainnet/admin.macaroon: no such file or directory
+
+```
+需要先创建钱包
+
