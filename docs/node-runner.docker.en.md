@@ -84,7 +84,7 @@
 
     
 
-    If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.example` already has recommended settings.
+    If you don’t have a full node, you can use the light neutrino configuration from the `lnd.conf.mainnet.example`. lnd will automatically sync data (approximately 10 minutes). When using light nodes like `neutrino`, it is recommended to increase the number of addpeer peer nodes appropriately to speed up synchronization, and the `lnd.conf.mainnet.example` already has recommended settings.
 
     ``` ini
     [Application Options]
